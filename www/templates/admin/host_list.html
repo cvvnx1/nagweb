@@ -1,0 +1,139 @@
+{% extends "admin/_layout.html" %}
+
+{% block head %}
+    
+{% endblock %}
+
+{% block page_title %} 分类 {% endblock %}
+{% block title %} 分类 <small>管理应用分类</small> {% endblock %}
+
+{% block breadcrumb %}
+<ul class="breadcrumb">
+  <li>
+    <i class="icon-home"></i>
+    <a href="{{ test }}">首页</a> 
+    <i class="icon-angle-right"></i>
+  </li>
+  <li>分类</li>
+  
+</ul>  
+{% endblock %}
+
+{% block content %}
+<!-- BEGIN  TABLE PORTLET-->
+<div class="portlet box blue">
+  <div class="portlet-title">
+    <div class="caption"><i class="icon-edit"></i>主机(HOST)</div>
+    <div class="tools">
+      <a href="javascript:;" class="collapse"></a>
+      <a href="javascript:;" class="reload"></a>
+      <a href="javascript:;" class="remove"></a>
+    </div>
+  </div>
+  <div class="portlet-body">
+    <div class="table-toolbar">
+			<div class="btn-group">
+				<a class="btn green" data-toggle="modal" href="{{ url_for('host_add') }}"><i class="icon-plus"></i></a>
+			</div>
+		</div>
+    <table class="table table-striped table-hover table-bordered" id="sample_editable_1">
+      <thead>
+        <tr>
+          <th>名称</th>
+          <th>别名</th>
+          <th>地址</th>
+          <th>模板</th>
+          <th>组名</th>
+          <th>注释</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for host in hosts %}
+        <tr>
+          <td>
+            {{ host['host_name'] }}
+          </td>
+          <td>
+            {% if host['alias'] %}{{ host['alias'] }}{% endif %}
+          </td>
+          <td>
+            {% if host['address'] %}{{ host['address'] }}{% endif %}
+          </td>
+          <td>
+            {% if host['use'] %}{{ host['use'] }}{% endif %}
+          </td>
+          <td>
+            {% for hostgroup in host.get_effective_hostgroups() %}
+              {{ hostgroup.hostgroup_name }}<br \>
+            {% endfor %}
+          </td>
+          <td>
+            {% if host['notes'] %}{{ host['notes'] }}{% endif %}
+          </td>
+          <td>
+            <a class="btn green" href="{{ url_for('host_edit', id=host.get_id()) }}">EDIT&nbsp;<i class="icon-edit"></i></a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="portlet box blue">
+  <div class="portlet-title">
+    <div class="caption"><i class="icon-edit"></i>主机组(HOST Group)</div>
+    <div class="tools">
+      <a href="javascript:;" class="collapse"></a>
+      <a href="javascript:;" class="reload"></a>
+      <a href="javascript:;" class="remove"></a>
+    </div>
+  </div>
+  <div class="portlet-body">
+    <div class="table-toolbar">
+			<div class="btn-group">
+				<a class="btn green" data-toggle="modal" href="{{ url_for('hostgroup_add') }}"><i class="icon-plus"></i></a>
+			</div>
+		</div>
+    <table class="table table-striped table-hover table-bordered" id="sample_editable_1">
+      <thead>
+        <tr>
+          <th>名称</th>
+          <th>别名</th>
+          <th>成员</th>
+          <th>注释</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for hostgroup in hostgroups %}
+        <tr>
+          <td>
+            {{ hostgroup['hostgroup_name'] }}
+          </td>
+          <td>
+            {% if hostgroup['alias'] %}{{ hostgroup['alias'] }}{% endif %}
+          </td>
+          <td>
+            {% for member in getHostgroupMember(hostgroup.get_id()) %}
+                {{ member.host_name }}<br>
+            {% endfor %}
+          </td>
+          <td>
+            {% if hostgroup['notes'] %}{{ hostgroup['notes'] }}{% endif %}
+          </td>
+          <td>
+            <a class="btn green" href="{{ url_for('hostgroup_edit', id=hostgroup.get_id()) }}">EDIT&nbsp;<i class="icon-edit"></i></a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+<!-- END  TABLE PORTLET-->
+{% endblock %}
+
+{% block menuName %}应用分类{% endblock %}
+

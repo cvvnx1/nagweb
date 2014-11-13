@@ -1,0 +1,30 @@
+{% extends "admin/_layout.html" %}
+
+{% block head %}
+    
+{% endblock %}
+
+{% block page_title %} Error {% endblock %}
+{% block title %} 分类 <small>管理应用分类</small> {% endblock %}
+
+{% block breadcrumb %}
+<ul class="breadcrumb">
+  <li>
+    <i class="icon-home"></i>
+    <a href="{{ test }}">首页</a> 
+    <i class="icon-angle-right"></i>
+  </li>
+  <li>分类</li>
+  
+</ul>  
+{% endblock %}
+
+{% block content %}
+<!-- BEGIN  TABLE PORTLET-->
+{{ msg }}
+{{ back }}
+<!-- END  TABLE PORTLET-->
+{% endblock %}
+
+{% block menuName %}应用分类{% endblock %}
+
